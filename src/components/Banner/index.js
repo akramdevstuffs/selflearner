@@ -4,12 +4,12 @@ import {
   HeroDescription,
   HeroText,
   HeroTitle,
-  Img,
+  Container,
 } from "./BannerElements";
 
 const Banner = () => {
   return (
-    <Img>
+    <Container>
       <HeroText>
         <HeroTitle>Get all courses for free</HeroTitle>
         <HeroDescription>
@@ -19,7 +19,7 @@ const Banner = () => {
         </HeroDescription>
         <ActionButton to="/courses">Explorer Courses</ActionButton>
       </HeroText>
-    </Img>
+    </Container>
   );
 };
 

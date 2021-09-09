@@ -17,10 +17,11 @@ export const Subjects = styled.div`
   gap: 10px;
   align-items: stretch;
   justify-content: space-around;
+  background: #293E4B;
+  border: 1px solid black;
 
   @media only screen and (min-width: 600px) {
     height: 100%;
-    border-right: 1px solid #95b0c2;
     flex-direction: column;
     justify-content: flex-start;
   }
@@ -40,6 +41,10 @@ export const Subject = styled.button`
   margin: 5px auto;
   cursor: pointer;
   background: ${(props) => props.active && "#D08E45"};
+  transition: background-color .25s ease;
+  &:hover {
+    background: #D08E45;
+  }
 `;
 
 export const CardTop = styled.div`
@@ -49,7 +54,7 @@ export const CardTop = styled.div`
   height: 50px;
   padding: 5px 35px;
   gap: 10px;
-  background: #adc0cc;
+  background: #293E4B;
   flex-direction: row;
   justify-content: space-around;
   flex: 1 1 1;
@@ -63,6 +68,10 @@ export const TopButton = styled.button`
   margin: 5px auto;
   cursor: pointer;
   background: ${(props) => props.active && "#D08E45"};
+  transition: background-color .25s ease;
+  &:hover {
+    background: #D08E45;
+  }
 `;
 
 export const ContentList = styled.div`
@@ -90,8 +99,8 @@ export const VideoCard = styled.div`
   @media screen and (max-width: 750px) {
     & {
       flex-direction: column;
-      width: 100%;
       align-items: center;
+      width: 90vw;
     }
     & > img {
       width: 100%;

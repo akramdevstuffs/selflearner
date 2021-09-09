@@ -8,6 +8,22 @@ import Blogs from './pages/blogs';
 import SignUp from './pages/signup';
 import NotFound from './components/NotFound';
 import Courses from './pages/courses';
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyA39YJhDFSVnPnTju0Gjf_GEMyvDjVuZb0",
+  authDomain: "self-learner-25a57.firebaseapp.com",
+  projectId: "self-learner-25a57",
+  storageBucket: "self-learner-25a57.appspot.com",
+  messagingSenderId: "124746110739",
+  appId: "1:124746110739:web:d97fa5d784c34abf1aace6",
+  measurementId: "G-VKTGFBHB2K"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app)
 
 function App() {
 return (

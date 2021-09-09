@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import backgroundImage from  '../../assests/banner/background.jpg';
 
-export const Img = styled.div`
+export const Container = styled.div`
     width: 100wh;
     height: 60vh;
     padding: 0;
@@ -21,12 +21,12 @@ export const HeroText = styled.div`
 `
 
 export const HeroTitle = styled.p`
-    font-size: 1.6rem;
-    font-weight: bolder;
+    font-size: 1.8rem;
+    font-weight: 1000;
     color: white;
     /* text-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF; */
     -webkit-text-stroke-color: black;
-    -webkit-text-stroke-width: 0.2px;
+    -webkit-text-stroke-width: 0.7px;
 `
 export const HeroDescription = styled.p`
     font-size: 1.3rem;
@@ -47,4 +47,8 @@ export const ActionButton = styled(Link)`
     background-size: cover;
     border: 1px solid #293E4B;
     text-decoration: none;
+    transition: background-color 0.25s ease;
+    &:hover {
+        background: #D08E45;
+    }
 `

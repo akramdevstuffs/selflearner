@@ -6,6 +6,7 @@ Bars,
 NavMenu,
 NavBtn,
 NavBtnLink,
+NavLogo,
 } from './NavbarElements';
 
 const Navbar = () => {
@@ -14,6 +15,8 @@ return (
 	<Nav>
 		<Bars />
 
+
+		<NavLogo activeStyle children="Self Learner" to='/' />
 		<NavMenu>
 		<NavLink to='/courses' activeStyle>
 			Courses
