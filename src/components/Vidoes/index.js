@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, PlayBackButton, PlayBackControls, Player } from "./VideosElements";
 
 const Videos = ({ match }) => {
   const [playbackRate, setPlaybackRate] = useState(1);
   const PlaybackList = [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2];
+  const [videoData, setVideoData] = useState({});
+  useEffect(() => {
+    fetch(`/api/courses/content/${match.params.videoId}`).then(resp=>resp.ok && resp.json()).then(resp=>setVideoData(resp))
+    //eslint-disable-next-line
+  },[])
   return (
       <Container>
     <Player
@@ -11,9 +16,9 @@ const Videos = ({ match }) => {
         height="70vh"
       controls
       playbackRate={playbackRate}
-      url="https://d1d34p8vz63oiq.cloudfront.net/be3782ed-ea9a-4a58-8e88-e8aa30cdbdfc/master.m3u8"
+      url={videoData.url}
         // url="https://youtu.be/jnI2Lld4is4"
-      config={{ file: { hlsOptions: { xhrSetup: function (xhr, url) { if (url.includes("api.penpencil.xyz")) { url = url.replace("https://api.penpencil.xyz", ""); xhr.open("GET", url); } }, }, },
+      config={{ file: { hlsOptions: { xhrSetup: function (xhr, url) { if (url.includes("api.penpencil.xyz")) { url = url.replace("https://api.penpencil.xyz", "/penpencil"); xhr.open("GET", url); } }, }, },
       }}
     />
 

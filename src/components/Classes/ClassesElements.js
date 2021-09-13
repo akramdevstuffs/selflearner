@@ -85,7 +85,7 @@ export const ContentList = styled.div`
 export const VideoCard = styled.div`
   width: 70vw;
   height: min-content;
-  min-height: 250px;
+  min-height: 150px;
   padding: 5px;
   margin: 20px auto;
   display: flex;
@@ -125,6 +125,15 @@ export const ContentTextSection = styled.div`
   margin-left: 10px;
   display: flex;
   flex-direction: column;
+`;
+
+export const DownloadLink = styled.p`
+  background: #d08e45;
+  font-size: 1.3rem;
+  align-self: center;
+  margin: auto;
+  text-decoration: none;
+  padding: 10px;
 `;
 
 export const ContentTitle = styled.p`

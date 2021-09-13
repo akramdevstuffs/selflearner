@@ -56,6 +56,10 @@ export const TextContainer = styled.ul`
 export const Title = styled.li`
   font-size: 1.2rem;
   color: #293e4b;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 `;
 export const Date = styled.li`
   margin-top: 16px;

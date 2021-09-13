@@ -5,32 +5,46 @@ import { VideosList } from "./VideosList";
 import {
   CardTop,
   Container,
-  ContentImg,
   ContentList,
-  ContentTextSection,
-  ContentTitle,
-  Date,
   Subject,
   Subjects,
   TopButton,
-  VideoCard,
-  VideoDuration,
 } from "./ClassesElements";
 
+// eslint-disable-next-line no-extend-native
+String.prototype.capitalizeFirstLetter = function () {
+  return this.charAt(0).toUpperCase() + this.slice(1);
+};
+
 const Classes = ({ history, match, location }) => {
-  let { path, url } = useRouteMatch();
-  let [subject, setSubject] = useState("maths");
-  let [contentType, setContentType] = useState("videos");
+  const { path, url } = useRouteMatch();
+  const [contentTypes, setContentTypes] = useState([]);
+  const [subjects, setSubjects] = useState([]);
+  const [subject, setSubject] = useState("");
+  const [contentType, setContentType] = useState("");
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const sub = params.get("subject");
     const type = params.get("type");
-    console.log(params);
-    setSubject(sub ? sub : "maths");
-    setContentType(type ? type : "videos");
+    setSubject(sub && Number(sub));
+    setContentType(type && type);
+    fetch(`/api/courses/${match.params.courseId}/getContentTypes`)
+      .then((resp) => resp.json())
+      .then((resp) => {
+        (type==="" || !type) && setContentType(resp[0].name);
+        setContentTypes(resp);
+      });
+    fetch(`/api/courses/${match.params.courseId}/getAllSubjects`)
+      .then((resp) => resp.json())
+      .then((resp) => {
+        if (!sub) setSubject(resp[0].id);
+        setSubjects(resp);
+      });
+
     //eslint-disable-next-line
   }, []);
+
 
   const updateParams = (sub, type) => {
     history.push(`${url}?subject=${sub}&type=${type}`);
@@ -41,60 +55,35 @@ const Classes = ({ history, match, location }) => {
       <Route path={`${path}/play/:videoId`} component={Videos} />
       <Container>
         <Subjects>
-          <Subject
-            active={subject === "maths" && "active"}
-            onClick={(e) => {
-              setSubject("maths");
-              updateParams("maths", contentType);
-            }}
-          >
-            Maths
-          </Subject>
-          <Subject
-            active={subject === "chemistry" && "active"}
-            onClick={(e) => {
-              setSubject("chemistry");
-              updateParams("chemistry", contentType);
-            }}
-          >
-            Chemistry
-          </Subject>
-          <Subject
-            active={subject === "physics" && "active"}
-            onClick={(e) => {
-              setSubject("physics");
-              updateParams("physics", contentType);
-            }}
-          >
-            Maths
-          </Subject>
+          {subjects.map((elem) => (
+            <Subject
+              active={
+                (subject === elem.id || subject === elem.name) && "active"
+              }
+              onClick={(e) => {
+                setSubject(elem.id);
+                updateParams(elem.id, contentType);
+              }}
+            >
+              {elem.name}
+            </Subject>
+          ))}
         </Subjects>
         <ContentList>
           <CardTop>
-            <TopButton
-              active={contentType === "videos" && "active"}
-              children="Videos"
-              onClick={(e) => {
-                setContentType("videos");
-                updateParams(subject, "videos");
-              }}
-            />
-            <TopButton
-              children="Notes"
-              active={contentType === "notes" && "active"}
-              onClick={(e) => {
-                setContentType("notes");
-                updateParams(subject, "notes");
-              }}
-            />
-            <TopButton
-              children="Exercise"
-              active={contentType === "exercise" && "active"}
-              onClick={(e) => {
-                setContentType("exercise");
-                updateParams(subject, "exercise");
-              }}
-            />
+            {contentTypes.map((elem) => (
+              <TopButton
+                active={
+                  (contentType === elem.name || contentType === elem.id) &&
+                  "active"
+                }
+                children={elem.name.capitalizeFirstLetter()}
+                onClick={(e) => {
+                  setContentType(elem.name);
+                  updateParams(subject, elem.name);
+                }}
+              />
+            ))}
           </CardTop>
           <VideosList subject={subject} type={contentType} />
         </ContentList>

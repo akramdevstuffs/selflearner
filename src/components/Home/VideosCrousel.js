@@ -5,7 +5,7 @@ import { CarouselNextArrow, CarouselPrevArrow } from "../Utils";
 import { CarouselCard, CarouselImg as Img } from "./CoursesCrouselElements";
 import Crousel from "./Crousel";
 
-const CoursesCrousel = withRouter(({ history, data }) => {
+const VideosCrousel = withRouter(({history, data}) => {
   const single_slider_settings = {
     dots: false,
     infinite: true,
@@ -18,11 +18,10 @@ const CoursesCrousel = withRouter(({ history, data }) => {
     nextArrow: <CarouselNextArrow />,
     prevArrow: <CarouselPrevArrow />,
   };
-
   const settings = {
     ...single_slider_settings,
-    slidesToShow: 7,
-    slidesToScroll: 7,
+    slidesToShow: 5,
+    slidesToScroll: 5,
     initialSlide: 0,
     responsive: [
       {
@@ -49,11 +48,11 @@ const CoursesCrousel = withRouter(({ history, data }) => {
       },
     ],
   };
-  return (
-    <Crousel headerText="Courses" sliderSettings={single_slider_settings}>
+    return (
+    <Crousel headerText="Videos" sliderSettings={settings}>
       {data.map((elem) => (
         <CarouselCard
-          onClick={(e) => history.push(`/courses/${elem.id}`)}
+          onClick={(e) => history.push(`/courses/${elem.course_id}/play/${elem.id}`)}
           key={elem.id}
         >
           <Img src={elem.image} />
@@ -63,7 +62,8 @@ const CoursesCrousel = withRouter(({ history, data }) => {
         </CarouselCard>
       ))}
     </Crousel>
-  );
+
+    )
 });
 
-export default CoursesCrousel;
+export default VideosCrousel

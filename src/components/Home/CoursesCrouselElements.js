@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Card } from "../Courses/CoursesElements";
 import { ArrowBackIos, ArrowForwardIos } from "@material-ui/icons";
+import Slider from "react-slick";
 
 export const Container = styled.div`
   height: fit-content;
@@ -26,16 +27,18 @@ export const HeaderText = styled.p`
 
 export const CarouselCard = styled(Card)`
   height: 95%;
-  margin: 10px 0;
-  padding: 0 10px 0 10px;
+  margin: auto;
+  /* padding: 0 10px 0 10px; */
+  display: block;
 `;
-export const CarouselSlider = styled.div``;
+export const CarouselSlider = styled(Slider)`
+`;
 export const CarouselImg = styled.img`
   padding: 0;
-  margin: 0;
-  height: 100%;
+  margin: auto;
+  height: calc(100vh/4);
   width: 90%;
-  object-fit: center;
+  object-fit: contain;
   border: none;
   border-radius: 12px 12px 0 0;
 `;
