@@ -25,6 +25,10 @@ export const Subjects = styled.div`
     flex-direction: column;
     justify-content: flex-start;
   }
+  @media only screen and (max-width: 600px){
+    overflow: auto;
+    justify-content: start;
+  }
 `;
 
 export const Subject = styled.button`
@@ -57,6 +61,7 @@ export const CardTop = styled.div`
   background: #293E4B;
   flex-direction: row;
   justify-content: space-around;
+  overflow: visible;
   flex: 1 1 1;
 `;
 export const TopButton = styled.button`

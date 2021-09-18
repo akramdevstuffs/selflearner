@@ -11,6 +11,16 @@ module.exports = function(app) {
     })
   );
   app.use(
+    '/live',
+    createProxyMiddleware({
+      target: 'http://localhost',
+      changeOrigin: true,
+      pathRewrite: {
+        "^/live": "/"
+      }
+    })
+  )
+  app.use(
     '/penpencil',
     createProxyMiddleware({
       target: 'https://api.penpencil.xyz',
