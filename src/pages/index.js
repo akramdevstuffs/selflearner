@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import Banner from "../components/Banner";
 import Feeds from "../components/Feeds";
+import axios from '../utils/axios'
 import CoursesCrousel from "../components/Home/CoursesCrousel";
 import { Container } from "../components/Home/HomeElements";
 import VideosCrousel from "../components/Home/VideosCrousel";
@@ -27,14 +28,8 @@ const Home = () => {
 };
 
 const fetchRecommendations = async () => {
-  const response = await fetch("/api/recommendations");
-  if (!response.ok) {
-    const message = `An error has occured: ${response.status}`;
-    throw new Error(message);
-  }
-  const recommendations = await response.json();
-  console.log(recommendations['courses']);
-  return recommendations;
+  const response = await axios.get("/api/recommendations");
+  return response.data;
 };
 
 export default Home;

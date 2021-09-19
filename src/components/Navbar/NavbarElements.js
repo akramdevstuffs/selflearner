@@ -3,19 +3,30 @@ import { NavLink as Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const Nav = styled.nav`
-  background: #9bd1f2;
+  /* background: #9bd1f2; */
   background-size: cover;
-  height: 60px;
+  height: 55px;
   display: flex;
   margin: 0;
   justify-content: space-between;
   align-items: center;
   flex: 1fr 5fr 1fr;
+  background: linear-gradient(90deg, rgb(28, 27, 27) 0%, rgb(26, 23, 23) 100%);
   padding: 0.2rem calc((100vw - 1000px) / 2);
   z-index: 12;
   /* Third Nav */
   /* justify-content: flex-start; */
 `;
+
+export const NavDropDownMenu = styled.div`
+  background: linear-gradient(90deg, rgb(28, 27, 27) 0%, rgb(26, 23, 23) 100%);
+  width: 100%;
+  height: 100%;
+
+  @media screen and (max-width: 768px) {
+    display: block;
+  }
+`
 
 export const NavLogo = styled(Link)`
   color: white;

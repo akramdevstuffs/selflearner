@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "../../utils/axios";
 import { Route, Switch, useRouteMatch } from "react-router";
 import Videos from "../Vidoes";
 import { VideosList } from "./VideosList";
@@ -10,6 +11,7 @@ import {
   Subjects,
   TopButton,
 } from "./ClassesElements";
+import { PrivateRoute } from "../PrivateRoute";
 
 // eslint-disable-next-line no-extend-native
 String.prototype.capitalizeFirstLetter = function () {
@@ -29,17 +31,15 @@ const Classes = ({ history, match, location }) => {
     const type = params.get("type");
     setSubject(sub && Number(sub));
     setContentType(type && type);
-    fetch(`/api/courses/${match.params.courseId}/getContentTypes`)
-      .then((resp) => resp.json())
+    axios.get(`/api/courses/${match.params.courseId}/getContentTypes`)
       .then((resp) => {
-        (type==="" || !type) && setContentType(resp[0].name);
-        setContentTypes(resp);
+        (type==="" || !type) && setContentType(resp.data[0].name);
+        setContentTypes(resp.data);
       });
-    fetch(`/api/courses/${match.params.courseId}/getAllSubjects`)
-      .then((resp) => resp.json())
+    axios.get(`/api/courses/${match.params.courseId}/getAllSubjects`)
       .then((resp) => {
-        if (!sub) setSubject(resp[0].id);
-        setSubjects(resp);
+        if (!sub) setSubject(resp.data[0].id);
+        setSubjects(resp.data);
       });
 
     //eslint-disable-next-line
@@ -52,7 +52,7 @@ const Classes = ({ history, match, location }) => {
 
   return (
     <Switch>
-      <Route path={`${path}/play/:videoId`} component={Videos} />
+      <PrivateRoute path={`${path}/play/:videoId`} component={Videos} />
       <Container>
         <Subjects>
           {subjects.map((elem) => (

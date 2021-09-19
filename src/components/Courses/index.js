@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
+import axios from "../../utils/axios"
 import { List, Card, Img, TextContainer,Title, Date as CourseDate } from './CoursesElements'
 
 const Courses = ({ history }) => {
     const [data, setData] = useState([]);
     useEffect(() => {
-        fetch("/api/courses/getAll").then((resp) => resp.json()).then(resp => setData(resp));
+        axios.get('/api/courses/getAll').then(resp => setData(resp.data));
     }, [])
     return (
         <List>

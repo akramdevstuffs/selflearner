@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "../../utils/axios";
 import { useRouteMatch, withRouter } from "react-router";
 import { DescriptionOutlined } from "@material-ui/icons";
 import pdfIcon from "../../assests/classes/pdf.png";
@@ -17,11 +18,10 @@ export const VideosList = withRouter(({ history, match, subject, type }) => {
   const [videosList, setVideosList] = useState([]);
   const [streamsList, setStreamList] = useState([]);
   useEffect(() => {
-    fetch(`/api/courses/${match.params.courseId}/getAll?subject=${subject}&type=${type}`)
-      .then((resp) => resp.ok && resp.json())
+    axios.get(`/api/courses/${match.params.courseId}/getAll?subject=${subject}&type=${type}`)
       .then((resp) => {
-        setVideosList(resp.contents);
-        setStreamList(resp['livestreams']);
+        setVideosList(resp.data.contents);
+        setStreamList(resp.data['livestreams']);
       }
         );
     //eslint-disable-next-line

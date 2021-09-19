@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "../../utils/axios";
 import { Container, PlayBackButton, PlayBackControls, Player } from "./VideosElements";
 
 const Videos = ({ match, location }) => {
@@ -10,9 +11,9 @@ const Videos = ({ match, location }) => {
     const params = new URLSearchParams(location.search);
     const isLivestream = params.get("livestream");
     if (isLivestream==="true"){
-      fetch(`/api/courses/live/${match.params.videoId}`).then(resp=>resp.json()).then(resp=>setVideoData(resp))
+      axios.get(`/api/courses/live/${match.params.videoId}`).then(resp=>setVideoData(resp.data))
 
-    }else fetch(`/api/courses/content/${match.params.videoId}`).then(resp=>resp.ok && resp.json()).then(resp=>setVideoData(resp))
+    }else axios.get(`/api/courses/content/${match.params.videoId}`).then(resp=>setVideoData(resp.data))
     //eslint-disable-next-line
   },[])
   return (
