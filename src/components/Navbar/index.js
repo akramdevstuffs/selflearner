@@ -7,7 +7,6 @@ NavMenu,
 NavBtn,
 NavBtnLink,
 NavLogo,
-NavDropDownMenu,
 } from './NavbarElements';
 
 const Navbar = () => {

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FaVideo } from "react-icons/fa"
 import styled from "styled-components";
 import { NavLink as Link } from "react-router-dom";
 import axios from "../../utils/axios";
@@ -25,6 +26,7 @@ const Navbar = () => {
       </Hamburger>
       <Menu isOpen={isOpen}>
         <MenuLink to="/courses">Courses</MenuLink>
+        <MenuLink to="/uploads"><MenuLinkContainer><FaVideo/> Uploads</MenuLinkContainer></MenuLink>
         <MenuLink to="/blogs">Blog</MenuLink>
         <MenuLink to="/about">About</MenuLink>
         {isLoggedIn ? (
@@ -38,6 +40,12 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+const MenuLinkContainer = styled.div`
+  display: flex;
+  gap:5px;
+  align-items: center;
+`
 
 const MenuLink = styled(Link)`
   padding: 1rem 2rem;
