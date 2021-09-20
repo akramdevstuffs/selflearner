@@ -12,6 +12,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { PrivateRoute } from './components/PrivateRoute';
 import Uploads from './components/Uploads';
+import Videos from './components/Vidoes';
 
 const firebaseConfig = {
   apiKey: "AIzaSyA39YJhDFSVnPnTju0Gjf_GEMyvDjVuZb0",
@@ -34,6 +35,7 @@ return (
 	<Switch>
 		<Route path='/' exact component={Home} />
 		<PrivateRoute path='/uploads' component={Uploads} />
+		<PrivateRoute path='/play/:videoId' component={Videos} />
 		<Route path='/courses' component={Courses} />
 		<Route path='/about' exact component={About} />
 		<Route path='/blogs' component={Blogs} />

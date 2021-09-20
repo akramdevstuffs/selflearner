@@ -95,6 +95,7 @@ export const VideoCard = styled.div`
   margin: 20px auto;
   display: flex;
   flex-direction: row;
+  align-items: center;
   gap: 10px;
   background: white;
   border-radius: 20px;
@@ -113,13 +114,30 @@ export const VideoCard = styled.div`
   }
 `;
 
+export const ContentImgContainer = styled.div`
+  position: relative;
+`
+
+export const ContentImgIcon = styled.img`
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    background-size: cover;
+    right: 0;
+    bottom: 0;
+    margin-right: 10px;
+    margin-bottom: 12px;
+    background-color: #00000026;
+`
+
 export const ContentImg = styled.img`
   width: 300px;
   max-width: 80wv;
   min-height: 1fr;
   max-height: 250px;
   left: 0;
-  border-radius: 20px;
+  border-radius: 5px;
+  position: relative;
 `;
 export const ContentTextSection = styled.div`
   right: 0;

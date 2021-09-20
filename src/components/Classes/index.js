@@ -12,6 +12,7 @@ import {
   TopButton,
 } from "./ClassesElements";
 import { PrivateRoute } from "../PrivateRoute";
+import PlayLists from "./PlayLists";
 
 // eslint-disable-next-line no-extend-native
 String.prototype.capitalizeFirstLetter = function () {
@@ -22,8 +23,9 @@ const Classes = ({ history, match, location }) => {
   const { path, url } = useRouteMatch();
   const [contentTypes, setContentTypes] = useState([]);
   const [subjects, setSubjects] = useState([]);
-  const [subject, setSubject] = useState("");
+  const [subject, setSubject] = useState();
   const [contentType, setContentType] = useState("");
+  const [playlist_id, setPlayListId] = useState();
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -31,12 +33,14 @@ const Classes = ({ history, match, location }) => {
     const type = params.get("type");
     setSubject(sub && Number(sub));
     setContentType(type && type);
-    axios.get(`/api/courses/${match.params.courseId}/getContentTypes`)
+    axios
+      .get(`/api/courses/${match.params.courseId}/getContentTypes`)
       .then((resp) => {
-        (type==="" || !type) && setContentType(resp.data[0].name);
+        (type === "" || !type) && setContentType(resp.data[0].name);
         setContentTypes(resp.data);
       });
-    axios.get(`/api/courses/${match.params.courseId}/getAllSubjects`)
+    axios
+      .get(`/api/courses/${match.params.courseId}/getAllSubjects`)
       .then((resp) => {
         if (!sub) setSubject(resp.data[0].id);
         setSubjects(resp.data);
@@ -45,30 +49,28 @@ const Classes = ({ history, match, location }) => {
     //eslint-disable-next-line
   }, []);
 
-
   const updateParams = (sub, type) => {
     history.push(`${url}?subject=${sub}&type=${type}`);
   };
 
   return (
-    <Switch>
-      <PrivateRoute path={`${path}/play/:videoId`} component={Videos} />
-      <Container>
-        <Subjects>
-          {subjects.map((elem) => (
-            <Subject
-              active={
-                (subject === elem.id || subject === elem.name) && "active"
-              }
-              onClick={(e) => {
-                setSubject(elem.id);
-                updateParams(elem.id, contentType);
-              }}
-            >
-              {elem.name}
-            </Subject>
-          ))}
-        </Subjects>
+    <Container>
+      <Subjects>
+        {subjects.map((elem) => (
+          <Subject
+            active={(subject === elem.id || subject === elem.name) && "active"}
+            key={elem.id}
+            onClick={(e) => {
+              setSubject(elem.id);
+              setPlayListId();
+              updateParams(elem.id, contentType);
+            }}
+          >
+            {elem.name}
+          </Subject>
+        ))}
+      </Subjects>
+      {playlist_id ? (
         <ContentList>
           <CardTop>
             {contentTypes.map((elem) => (
@@ -85,10 +87,12 @@ const Classes = ({ history, match, location }) => {
               />
             ))}
           </CardTop>
-          <VideosList subject={subject} type={contentType} />
+          <VideosList subject={subject} playlist_id={playlist_id} type={contentType} />
         </ContentList>
-      </Container>
-    </Switch>
+      ):
+      <PlayLists subject_id={subject} setPlayListId={e=> setPlayListId(e)} />
+      }
+    </Container>
   );
 };
 

@@ -7,13 +7,7 @@ const Videos = ({ match, location }) => {
   const PlaybackList = [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2];
   const [videoData, setVideoData] = useState({});
   useEffect(() => {
-
-    const params = new URLSearchParams(location.search);
-    const isLivestream = params.get("livestream");
-    if (isLivestream==="true"){
-      axios.get(`/api/courses/live/${match.params.videoId}`).then(resp=>setVideoData(resp.data))
-
-    }else axios.get(`/api/courses/content/${match.params.videoId}`).then(resp=>setVideoData(resp.data))
+    axios.get(`/api/courses/content/${match.params.videoId}`).then(resp=>setVideoData(resp.data))
     //eslint-disable-next-line
   },[])
   return (
@@ -24,7 +18,6 @@ const Videos = ({ match, location }) => {
       controls
       playbackRate={playbackRate}
       url={videoData.url}
-        // url="https://youtu.be/jnI2Lld4is4"
       config={{ file: { hlsOptions: { xhrSetup: function (xhr, url) { if (url.includes("api.penpencil.xyz")) { url = url.replace("https://api.penpencil.xyz", "/penpencil"); xhr.open("GET", url); } }, }, },
       }}
     />
