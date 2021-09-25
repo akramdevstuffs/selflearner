@@ -30,4 +30,14 @@ module.exports = function(app) {
       }
     })
   );
+  app.use(
+    '/penpencildev',
+    createProxyMiddleware({
+      target: 'https://api-dev.penpencil.xyz',
+      changeOrigin: true,
+      pathRewrite: {
+        "^/penpencildev": "/"
+      }
+    })
+  );
 };

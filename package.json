@@ -19,6 +19,7 @@
     "react-slick": "^0.28.1",
     "react-spinners": "^0.11.0",
     "slick-carousel": "^1.8.1",
+    "socket.io-client": "^3.0.4",
     "styled-components": "^5.3.1",
     "web-vitals": "^1.1.2"
   },
@@ -27,7 +28,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "react-scripts build && aws s3 rm s3://selflearner.akramdevstuffs.in/ --recursive && aws s3 cp ./build s3://selflearner.akramdevstuffs.in/ --recursive --acl public-read"
+    "deploy": "react-scripts build && scp -i ~/.ssh/selflearner_aws.pem -prq ./build ubuntu@3.109.206.236:~/selflearner"
   },
   "eslintConfig": {
     "extends": [

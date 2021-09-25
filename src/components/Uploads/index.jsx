@@ -9,14 +9,18 @@ const Uploads = () => {
   const [name, setName] = useState();
   const [description, setDescription] = useState();
   const [stream_data, setStreamData] = useState();
+  const [livechat_enabled, setLiveChatEnabled] = useState(false);
+  const [slowdownTime, setSlowdownTime] = useState();
 
   const submitForm = (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("name",name);
-    formData.append("description",description);
+    formData.append("name", name);
+    formData.append("description", description);
     if (upload_type === 2) {
       formData.append("image", image_file);
+      formData.append("livechat_enabled", livechat_enabled);
+      formData.append("slowdown", slowdownTime*1000);
       axios
         .post("/api/live/start_livestream", formData, {
           headers: { "Content-Type": "multipart/form-data" },
@@ -76,6 +80,29 @@ const Uploads = () => {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
+        {upload_type === 2 && (
+          <LiveChatContainer>
+            <div>
+              <CheckBox
+                type="checkbox"
+                checked={livechat_enabled}
+                onChange={(e) => setLiveChatEnabled(e.target.checked)}
+              />
+              Livechat Enabled
+            </div>
+            {livechat_enabled && (
+              <InputBox
+                value={slowdownTime}
+                onChange={(e) => setSlowdownTime(e.target.value)}
+                width="50%"
+                type="number"
+                min="0"
+                placeholder="Time in seconds"
+                required
+              />
+            )}
+          </LiveChatContainer>
+        )}
         <br />
         <InputLabel for="image_input">
           Select Image
@@ -174,7 +201,7 @@ const FormHeader = styled.p`
 `;
 
 const InputBox = styled.input`
-  width: 100%;
+  width: ${({ width }) => (width ? width : "100%")};
   padding: 12px 20px;
   margin: 8px 0;
   box-sizing: border-box;
@@ -220,4 +247,17 @@ const InfoContainer = styled.div`
   background-color: #faf6c763;
   padding: 20px;
   border-radius: 20px;
+`;
+
+const LiveChatContainer = styled.div`
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+`;
+
+const CheckBox = styled.input`
+  width: 20px;
+  height: 20px;
 `;

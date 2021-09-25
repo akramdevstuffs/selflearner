@@ -23,15 +23,27 @@ const Classes = ({ history, match, location }) => {
   const { path, url } = useRouteMatch();
   const [contentTypes, setContentTypes] = useState([]);
   const [subjects, setSubjects] = useState([]);
-  const [subject, setSubject] = useState();
+  const [subject, setSubject] = useState(() => new URLSearchParams(location.search).get("subject"));
   const [contentType, setContentType] = useState("");
   const [playlist_id, setPlayListId] = useState();
+
+  // useEffect(() => {
+  //   const params = new URLSearchParams(location.search);
+  //   const sub = params.get("subject");
+  //   const type = params.get("type");
+  //   setSubject(sub && Number(sub));
+  //   setContentType(type && type);
+  // },[location]);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const sub = params.get("subject");
+    console.log("This is the sub value",sub);
     const type = params.get("type");
-    setSubject(sub && Number(sub));
+    setSubject(s => {
+      console.log("This is s",s)
+      return sub && Number(sub);
+    });
     setContentType(type && type);
     axios
       .get(`/api/courses/${match.params.courseId}/getContentTypes`)

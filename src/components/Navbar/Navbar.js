@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaVideo } from "react-icons/fa"
+import { FaVideo } from "react-icons/fa";
 import styled from "styled-components";
 import { NavLink as Link } from "react-router-dom";
 import axios from "../../utils/axios";
@@ -11,28 +11,51 @@ const Navbar = () => {
   );
 
   const logout = () => {
-    axios.get('/api/logout');
+    axios.get("/api/logout");
     localStorage.clear();
     setIsLoggedIn(false);
   };
 
+  const closeOpen = () => {
+    setIsOpen(false);
+  };
+
   return (
     <Nav>
-      <Logo to="/">Selflearner</Logo>
+      <Logo onClick={closeOpen} to="/">Selflearner</Logo>
       <Hamburger onClick={() => setIsOpen(!isOpen)}>
         <span />
         <span />
         <span />
       </Hamburger>
       <Menu isOpen={isOpen}>
-        <MenuLink to="/courses">Courses</MenuLink>
-        <MenuLink to="/uploads"><MenuLinkContainer><FaVideo/> Uploads</MenuLinkContainer></MenuLink>
-        <MenuLink to="/blogs">Blog</MenuLink>
-        <MenuLink to="/about">About</MenuLink>
+        <MenuLink onClick={closeOpen} to="/courses">
+          Courses
+        </MenuLink>
+        <MenuLink onClick={closeOpen} to="/uploads">
+          <MenuLinkContainer>
+            <FaVideo /> Uploads
+          </MenuLinkContainer>
+        </MenuLink>
+        <MenuLink onClick={closeOpen} to="/blogs">
+          Blog
+        </MenuLink>
+        <MenuLink onClick={closeOpen} to="/about">
+          About
+        </MenuLink>
         {isLoggedIn ? (
-          <MenuBtn onClick={logout}>Logout</MenuBtn>
+          <MenuBtn
+            onClick={() => {
+              closeOpen();
+              logout();
+            }}
+          >
+            Logout
+          </MenuBtn>
         ) : (
-          <MenuLink to="/login">Login</MenuLink>
+          <MenuLink onClick={closeOpen} to="/login">
+            Login
+          </MenuLink>
         )}
       </Menu>
     </Nav>
@@ -43,9 +66,10 @@ export default Navbar;
 
 const MenuLinkContainer = styled.div`
   display: flex;
-  gap:5px;
+  gap: 5px;
   align-items: center;
-`
+  height: 3em;
+`;
 
 const MenuLink = styled(Link)`
   padding: 1rem 2rem;
