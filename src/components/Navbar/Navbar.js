@@ -3,9 +3,13 @@ import { FaVideo } from "react-icons/fa";
 import styled from "styled-components";
 import { NavLink as Link } from "react-router-dom";
 import axios from "../../utils/axios";
+import { useDispatch, useSelector } from "react-redux";
+import { change, close } from "../../redux/nav";
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const isOpen = useSelector((state) => state.nav.isOpen);
+  const dispatch = useDispatch();
+
   const [isLoggedIn, setIsLoggedIn] = useState(
     localStorage.getItem("token") !== null
   );
@@ -17,13 +21,15 @@ const Navbar = () => {
   };
 
   const closeOpen = () => {
-    setIsOpen(false);
+    dispatch(close());
   };
 
   return (
     <Nav>
-      <Logo onClick={closeOpen} to="/">Selflearner</Logo>
-      <Hamburger onClick={() => setIsOpen(!isOpen)}>
+      <Logo onClick={closeOpen} to="/">
+        Selflearner
+      </Logo>
+      <Hamburger onClick={() => dispatch(change(!isOpen))}>
         <span />
         <span />
         <span />
@@ -98,6 +104,7 @@ const MenuBtn = styled.p`
 `;
 
 const Nav = styled.div`
+  position: fixed;
   padding: 0 2rem;
   display: flex;
   justify-content: space-between;

@@ -1,43 +1,43 @@
-const { createProxyMiddleware } = require('http-proxy-middleware');
-module.exports = function(app) {
+const { createProxyMiddleware } = require("http-proxy-middleware");
+module.exports = function (app) {
   app.use(
-    '/api',
+    "/api",
     createProxyMiddleware({
-      target: 'http://localhost:5000',
+      target: "http://localhost:5000",
       changeOrigin: true,
       pathRewrite: {
-        "^/api": "/"
-      }
+        "^/api": "/",
+      },
     })
   );
   app.use(
-    '/hls',
+    "/hls",
     createProxyMiddleware({
-      target: 'http://localhost/hls',
+      target: "http://localhost/hls",
       changeOrigin: true,
       pathRewrite: {
-        "^/hls": "/"
-      }
-    })
-  )
-  app.use(
-    '/penpencil',
-    createProxyMiddleware({
-      target: 'https://api.penpencil.xyz',
-      changeOrigin: true,
-      pathRewrite: {
-        "^/penpencil": "/"
-      }
+        "^/hls": "/",
+      },
     })
   );
   app.use(
-    '/penpencildev',
+    "/penpencil",
     createProxyMiddleware({
-      target: 'https://api-dev.penpencil.xyz',
+      target: "https://api.penpencil.xyz",
       changeOrigin: true,
       pathRewrite: {
-        "^/penpencildev": "/"
-      }
+        "^/penpencil": "/",
+      },
+    })
+  );
+  app.use(
+    "/penpencildev",
+    createProxyMiddleware({
+      target: "https://api-dev.penpencil.xyz",
+      changeOrigin: true,
+      pathRewrite: {
+        "^/penpencildev": "/",
+      },
     })
   );
 };

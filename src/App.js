@@ -14,6 +14,7 @@ import { PrivateRoute } from "./components/PrivateRoute";
 import Uploads from "./components/Uploads";
 import Videos from "./components/Vidoes";
 import styled from "styled-components";
+import BodyContainer from "./components/BodyContainer";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA39YJhDFSVnPnTju0Gjf_GEMyvDjVuZb0",
@@ -33,7 +34,7 @@ function App() {
   return (
     <Router>
       <Navbar />
-      <ContentContainer>
+      <BodyContainer>
       <Switch>
         <Route path="/" exact component={Home} />
         <PrivateRoute path="/uploads" component={Uploads} />
@@ -45,19 +46,9 @@ function App() {
         {/* <Route path='/logout' component={} /> */}
         <Route path="/" component={NotFound} />
       </Switch>
-      </ContentContainer>
+      </BodyContainer>
     </Router>
   );
 }
 
 export default App;
-
-const ContentContainer = styled.div`
-  position: absolute;
-  top: 64px;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  z-index: -1;
-  padding: 10px 0 0 0;
-`
